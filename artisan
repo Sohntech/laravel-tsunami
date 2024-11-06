@@ -1,3 +1,4 @@
+php artisan make:migration create_promo_table
 #!/usr/bin/env php
 <?php
 

@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cagnotte', function (Blueprint $table) {
+        Schema::create('promo', function (Blueprint $table) {
             $table->id();
+            $table->string('titre', 100)->nullable();
+            $table->text('contenu')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
+        
     }
 
     /**
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cagnotte');
+        Schema::dropIfExists('promo');
     }
 };
