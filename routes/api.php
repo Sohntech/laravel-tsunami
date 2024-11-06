@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\FavoriController;
 use App\Http\Controllers\ScheduledTransferController;
+use App\Http\Controllers\TransactionHistoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +28,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/transfer/cancel', [TransactionController::class, 'cancelTransfer']);
     Route::post('/transfer/schedule', [ScheduledTransferController::class, 'schedule']);
     Route::post('/transfer/multiple', [TransactionController::class, 'multipleTransfer']);
+    // Routes pour l'historique
+    Route::get('/transactions/history', [TransactionHistoryController::class, 'index']);
 });
 Route::middleware('auth:sanctum')->group(function () {
     // ... autres routes existantes

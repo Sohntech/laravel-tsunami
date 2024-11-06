@@ -7,14 +7,20 @@ use App\Services\TransferService;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\CancelTransferRequest;
 use App\Http\Requests\MultipleTransferRequest;
+use App\Http\Requests\TransactionHistoryRequest;
+use App\Services\TransactionHistoryService;
 
 class TransactionController extends Controller
 {
     protected $transferService;
+    protected $historyService;
 
-    public function __construct(TransferService $transferService)
-    {
+    public function __construct(
+        TransferService $transferService,
+        TransactionHistoryService $historyService
+    ) {
         $this->transferService = $transferService;
+        $this->historyService = $historyService;
     }
 
     public function transfer(TransferRequest $request)
@@ -81,6 +87,25 @@ class TransactionController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Erreur lors des transferts multiples',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function history(TransactionHistoryRequest $request)
+    {
+        try {
+            $result = $this->historyService->getHistory(
+                $request->user()->id,
+                $request->validated()
+            );
+
+            return response()->json($result);
+
+        } catch (\Exception $e) {
+            Log::error('Erreur historique : ' . $e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => 'Erreur lors de la récupération de l\'historique',
                 'error' => $e->getMessage()
             ], 500);
         }

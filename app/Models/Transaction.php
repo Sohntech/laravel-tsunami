@@ -9,7 +9,7 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    protected $table = 'transaction';  // Spécifier le nom de la table
+    protected $table = 'transaction';
 
     protected $fillable = [
         'montant',
@@ -23,33 +23,33 @@ class Transaction extends Model
         'cancelled_by'
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'cancelled_at'
+    ];
+
     protected $casts = [
+        'montant' => 'float',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'cancelled_at' => 'datetime'
     ];
 
-    // ... relations existantes ...
-
-    public function cancelledByUser()
-    {
-        return $this->belongsTo(User::class, 'cancelled_by');
-    }
-    public function type()
-    {
-        return $this->belongsTo(Type::class);
-    }
+    protected $with = ['expediteur', 'beneficiaire', 'type'];
 
     public function expediteur()
     {
         return $this->belongsTo(User::class, 'exp');
     }
 
-    public function destinataire()
+    public function beneficiaire()
     {
         return $this->belongsTo(User::class, 'destinataire');
     }
 
-    public function agent()
+    public function type()
     {
-        return $this->belongsTo(User::class, 'agent');
+        return $this->belongsTo(Type::class);
     }
 }
