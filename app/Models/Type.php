@@ -9,6 +9,15 @@ class Type extends Model
 {
     use HasFactory;
 
-    protected $table = 'type'; // Nom exact de la table dans la base de données
+    protected $table = 'type';
 
+    protected $fillable = [
+        'libelle',
+        'description'
+    ];
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

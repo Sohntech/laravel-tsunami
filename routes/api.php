@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FavoriController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -19,7 +20,19 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
+    Route::post('/transfer', [TransactionController::class, 'transfer']);
 });
+Route::middleware('auth:sanctum')->group(function () {
+    // ... autres routes existantes
+    Route::post('/favoris', [FavoriController::class, 'add']);
+    Route::get('/favoris', [FavoriController::class, 'list']);
+});
+
+
+
+
+
+
 
 // Routes protégées
 Route::middleware('auth:sanctum')->group(function () {
