@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/transfer', [TransactionController::class, 'transfer']);
     Route::post('/transfer/cancel', [TransactionController::class, 'cancelTransfer']);
     Route::post('/transfer/schedule', [ScheduledTransferController::class, 'schedule']);
+    Route::post('/transfer/multiple', [TransactionController::class, 'multipleTransfer']);
 });
 Route::middleware('auth:sanctum')->group(function () {
     // ... autres routes existantes
