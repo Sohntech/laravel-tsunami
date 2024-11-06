@@ -11,7 +11,8 @@ use App\Services\Interfaces\AuthServiceInterface;
 use App\Services\AuthService;
 use App\Repositories\Interfaces\TransactionRepositoryInterface;
 use App\Repositories\TransactionRepository;
-
+use App\Repositories\Interfaces\ScheduledTransferRepositoryInterface;
+use App\Repositories\ScheduledTransferRepository;
 class RepositoryServiceProvider extends ServiceProvider
 {
     public function register()
@@ -32,6 +33,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             FavoriRepositoryInterface::class,
             FavoriRepository::class
+        );
+        // ScheduledTransfer Repository
+        $this->app->bind(
+            ScheduledTransferRepositoryInterface::class,
+            ScheduledTransferRepository::class
         );
     }
 }

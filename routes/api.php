@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FavoriController;
+use App\Http\Controllers\ScheduledTransferController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -22,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/transfer', [TransactionController::class, 'transfer']);
     Route::post('/transfer/cancel', [TransactionController::class, 'cancelTransfer']);
+    Route::post('/transfer/schedule', [ScheduledTransferController::class, 'schedule']);
 });
 Route::middleware('auth:sanctum')->group(function () {
     // ... autres routes existantes
