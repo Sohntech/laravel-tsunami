@@ -16,9 +16,23 @@ class Transaction extends Model
         'destinataire',
         'agent',
         'exp',
-        'type_id'
+        'type_id',
+        'status',
+        'cancelled_at',
+        'cancel_reason',
+        'cancelled_by'
     ];
 
+    protected $casts = [
+        'cancelled_at' => 'datetime'
+    ];
+
+    // ... relations existantes ...
+
+    public function cancelledByUser()
+    {
+        return $this->belongsTo(User::class, 'cancelled_by');
+    }
     public function type()
     {
         return $this->belongsTo(Type::class);

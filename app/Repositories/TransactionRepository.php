@@ -31,4 +31,11 @@ class TransactionRepository implements TransactionRepositoryInterface
     {
         return $this->model->find($id);
     }
+
+    public function update(int $id, array $data)
+    {
+        $transaction = $this->model->findOrFail($id);
+        $transaction->update($data);
+        return $transaction;
+    }
 }

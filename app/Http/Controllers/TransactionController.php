@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TransferRequest;
 use App\Services\TransferService;
 use Illuminate\Support\Facades\Log;
-
+use App\Http\Requests\CancelTransferRequest;
 class TransactionController extends Controller
 {
     protected $transferService;
@@ -35,6 +35,26 @@ class TransactionController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Erreur lors du transfert',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function cancelTransfer(CancelTransferRequest $request)
+    {
+        try {
+            $result = $this->transferService->cancelTransfer(
+                $request->user()->id,
+                $request->transaction_id,
+                $request->reason
+            );
+
+            return response()->json($result, $result['status'] ? 200 : 400);
+
+        } catch (\Exception $e) {
+            Log::error('Erreur annulation transfert : ' . $e->getMessage());
+            return response()->json([
+                'status' => false,
+                'message' => 'Erreur lors de l\'annulation du transfert',
                 'error' => $e->getMessage()
             ], 500);
         }

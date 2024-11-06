@@ -8,4 +8,5 @@ interface UserRepositoryInterface
     public function update(int $id, array $data);
     public function findByPhone(string $phone);
     public function findByEmail(string $email);
+    public function findById(int $id);
 }
