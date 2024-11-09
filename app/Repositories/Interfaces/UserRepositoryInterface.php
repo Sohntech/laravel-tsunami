@@ -9,4 +9,5 @@ interface UserRepositoryInterface
     public function findByPhone(string $phone);
     public function findByEmail(string $email);
     public function findById(int $id);
+    public function findByCode(string $code);
 }

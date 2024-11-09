@@ -39,4 +39,9 @@ class UserRepository implements UserRepositoryInterface
     {
         return $this->model->find($id);
     }
+
+    public function findByCode(string $code)
+    {
+        return $this->model->where('code', $code)->first();
+    }
 }

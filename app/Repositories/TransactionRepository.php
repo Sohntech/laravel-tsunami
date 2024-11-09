@@ -112,4 +112,21 @@ class TransactionRepository implements TransactionRepositoryInterface
 
         return $stats;
     }
+    public function getMerchantTransactions(int $merchantId, array $filters = [])
+    {
+        $query = $this->model
+            ->where('destinataire', $merchantId)
+            ->where('type_id', 4) // PAIEMENT_MARCHAND
+            ->where('status', 'completed');
+
+        if (isset($filters['start_date'])) {
+            $query->whereDate('created_at', '>=', $filters['start_date']);
+        }
+
+        if (isset($filters['end_date'])) {
+            $query->whereDate('created_at', '<=', $filters['end_date']);
+        }
+
+        return $query->get();
+    }
 }
