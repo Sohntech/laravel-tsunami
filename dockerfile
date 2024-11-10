@@ -30,13 +30,8 @@ RUN composer install --optimize-autoloader --no-dev
 RUN chown -R www-data:www-data /var/www && \
     chmod -R 755 /var/www/storage
 
-# Copie le fichier start.sh et rend-le exécutable
-COPY start.sh /usr/local/bin/start.sh
-RUN chmod +x /usr/local/bin/start.sh
-
-# Expose le port 9000 pour PHP-FPM et 80 pour Nginx
+# Expose le port 9000 pour PHP-FPM (pas besoin d'exposer le port HTTP ici)
 EXPOSE 9000
-EXPOSE 80
 
-# Commande pour démarrer PHP-FPM (Nginx est démarré dans le conteneur nginx)
+# Commande pour démarrer PHP-FPM
 CMD ["php-fpm"]
