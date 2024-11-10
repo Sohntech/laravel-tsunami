@@ -14,7 +14,6 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libpq-dev \
     curl \
-    nginx \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql pdo_pgsql mbstring exif pcntl bcmath zip intl
 
@@ -39,5 +38,5 @@ RUN chmod +x /usr/local/bin/start.sh
 EXPOSE 9000
 EXPOSE 80
 
-# Commande pour démarrer les services PHP-FPM et Nginx via le script start.sh
-CMD ["/usr/local/bin/start.sh"]
+# Commande pour démarrer PHP-FPM (Nginx est démarré dans le conteneur nginx)
+CMD ["php-fpm"]
