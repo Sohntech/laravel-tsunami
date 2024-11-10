@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libpq-dev \
     curl \
+    nginx \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql pdo_pgsql mbstring exif pcntl bcmath zip intl
 
@@ -30,7 +31,13 @@ RUN composer install --optimize-autoloader --no-dev
 RUN chown -R www-data:www-data /var/www && \
     chmod -R 755 /var/www/storage
 
-# Expose le port 9000 pour PHP-FPM
-EXPOSE 9000
+# Copie le fichier start.sh et rend-le exécutable
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
 
-CMD ["php-fpm"]
+# Expose le port 9000 pour PHP-FPM et 80 pour Nginx
+EXPOSE 9000
+EXPOSE 80
+
+# Commande pour démarrer les services PHP-FPM et Nginx via le script start.sh
+CMD ["/usr/local/bin/start.sh"]
